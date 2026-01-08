@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्पीडी कुरियर सर्विस</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+        
+        body {
+            padding-top: 56px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .feature-box {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .tracking-form {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: -50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .service-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .price-card {
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .price-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .btn-courier {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-courier:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .tracking-status {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-picked { background: #cce5ff; color: #004085; }
+        .status-transit { background: #d4edda; color: #155724; }
+        .status-delivered { background: #d1ecf1; color: #0c5460; }
+        
+        @media (max-width: 768px) {
+            .hero-section { padding: 60px 0; }
+            .tracking-form { margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- नेव्हिगेशन बार -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand nav-logo" href="#">
+                <i class="fas fa-shipping-fast"></i> स्पीडी कुरियर
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">होम</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">सेवा</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#track">ट्रॅक</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">दर</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">संपर्क</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary ms-2" onclick="openBookingModal()">
+                            <i class="fas fa-box"></i> ऑर्डर करा
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- हीरो सेक्शन -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">वेगवान आणि विश्वासार्थ कुरियर सेवा</h1>
+            <p class="lead mb-4">संपूर्ण महाराष्ट्रभर 24 तासांत डिलिवरी</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="tracking-form">
+                        <h3 class="mb-4"><i class="fas fa-search-location"></i> पॅकेज ट्रॅक करा</h3>
+                        <div class="input-group input-group-lg">
+                            <input type="text" id="trackingInput" class="form-control" 
+                                   placeholder="ट्रॅकिंग आयडी एंटर करा (उदा. TRK123456)" required>
+                            <button class="btn btn-warning" type="button" onclick="trackPackage()">
+                                <i class="fas fa-search"></i> ट्रॅक करा
+                            </button>
+                        </div>
+                        <div id="trackingResult" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- सेवा सेक्शन -->
+    <section id="services" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">आमच्या सेवा</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box bg-light">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-shipping-fast fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="text-center">वेगवान डिलिवरी</h4>
+                        <p class="text-center">समोरासमोर 24 तासांत, इतर ठिकाणी 48 तासांत डिलिवरी</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box bg-light">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-rupee-sign fa-3x text-success"></i>
+                        </div>
+                        <h4 class="text-center">सवलत दर</h4>
+                        <p class="text-center">बाजारपेठेपेक्षा 20% कमी दर, रोख पेमेंटवर अतिरिक्त सवलत</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box bg-light">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-headset fa-3x text-danger"></i>
+                        </div>
+                        <h4 class="text-center">24×7 सपोर्ट</h4>
+                        <p class="text-center">दिवसा-रात्री कस्टमर केअर, त्वरित समस्या निराकरण</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- बुकिंग फॉर्म -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">नवीन शिपमेंट बुक करा</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+                            <form     action="/register" enctype="multipart/form-data" >
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label>आपले नाव *</label>
+                                        <input type="text" class="form-control" id="customerName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>मोबाईल नंबर *</label>
+                                        <input type="tel" class="form-control" id="customerPhone" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label>पिकअप पत्ता *</label>
+                                    <textarea class="form-control" id="pickupAddress" rows="2" required></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label>डिलिवरी पत्ता *</label>
+                                    <textarea class="form-control" id="deliveryAddress" rows="2" required></textarea>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>पॅकेज प्रकार</label>
+                                        <select class="form-control" id="packageType">
+                                            <option value="document">दस्तऐवज</option>
+                                            <option value="parcel">पार्सल</option>
+                                            <option value="heavy">वजनदार सामान</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>वजन (किलो) *</label>
+                                        <input type="number" class="form-control" id="weight" step="0.1" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>अंदाजे किंमत</label>
+                                        <div class="form-control bg-light" id="estimatedPrice">0 ₹</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-check-circle"></i> बुक करा
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- दर तक्ता -->
+    <section id="pricing" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">आमचे दर</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="price-card text-center p-4">
+                        <h4>दस्तऐवज</h4>
+                        <h2 class="my-3">₹30</h2>
+                        <p>पहिले 500 ग्रॅम</p>
+                        <p>प्रत्येक अतिरिक्त 100 ग्रॅम: ₹5</p>
+                        <p>24 तासांत डिलिवरी</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="price-card text-center p-4 bg-primary text-white">
+                        <h4>पार्सल</h4>
+                        <h2 class="my-3">₹50</h2>
+                        <p>पहिले 1 किलो</p>
+                        <p>प्रत्येक अतिरिक्त किलो: ₹20</p>
+                        <p>48 तासांत डिलिवरी</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="price-card text-center p-4">
+                        <h4>वजनदार</h4>
+                        <h2 class="my-3">₹100</h2>
+                        <p>पहिले 5 किलो</p>
+                        <p>प्रत्येक अतिरिक्त किलो: ₹15</p>
+                        <p>72 तासांत डिलिवरी</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- संपर्क -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">संपर्क साधा</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h4><i class="fas fa-map-marker-alt text-primary"></i> पत्ता</h4>
+                        <p>शिवाजी नगर, पुणे, महाराष्ट्र - 411016</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4><i class="fas fa-phone text-primary"></i> फोन</h4>
+                        <p>+91 98765 43210</p>
+                        <p>+91 98765 43211</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4><i class="fas fa-envelope text-primary"></i> ईमेल</h4>
+                        <p>info@speedycourier.com</p>
+                        <p>support@speedycourier.com</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">संदेश पाठवा</h4>
+                            <form id="contactForm" onsubmit="event.preventDefault(); sendMessage();">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="नाव" id="contactName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="ईमेल" id="contactEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="tel" class="form-control" placeholder="मोबाईल" id="contactPhone">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" rows="4" placeholder="तुमचा संदेश" id="contactMessage" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">संदेश पाठवा</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- फूटर -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>स्पीडी कुरियर</h4>
+                    <p>वेगवान आणि विश्वासार्थ कुरियर सेवा. 2010 पासून सेवा.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>द्रुत लिंक</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-light">होम</a></li>
+                        <li><a href="#services" class="text-light">सेवा</a></li>
+                        <li><a href="#track" class="text-light">ट्रॅक पॅकेज</a></li>
+                        <li><a href="#pricing" class="text-light">दर</a></li>
+                        <li><a href="#contact" class="text-light">संपर्क</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>कार्याचे तास</h4>
+                    <p>सोमवार - शनिवार: 8:00 AM - 10:00 PM</p>
+                    <p>रविवार: 9:00 AM - 8:00 PM</p>
+                    <p>24×7 ट्रॅकिंग सेवा उपलब्ध</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <p class="text-center mb-0">© 2023 स्पीडी कुरियर सर्विस. सर्व हक्क राखीव.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // किंमत कॅल्क्युलेटर
+        document.getElementById('weight').addEventListener('input', calculatePrice);
+        document.getElementById('packageType').addEventListener('change', calculatePrice);
+        
+        function calculatePrice() {
+            const type = document.getElementById('packageType').value;
+            const weight = parseFloat(document.getElementById('weight').value) || 0;
+            let price = 0;
+            
+            if (type === 'document') {
+                price = 30 + Math.max(0, (weight - 0.5) * 10) * 5;
+            } else if (type === 'parcel') {
+                price = 50 + Math.max(0, (weight - 1)) * 20;
+            } else if (type === 'heavy') {
+                price = 100 + Math.max(0, (weight - 5)) * 15;
+            }
+            
+            document.getElementById('estimatedPrice').textContent = Math.round(price) + ' ₹';
+        }
+        
+        // ट्रॅकिंग फंक्शन
+        function trackPackage() {
+            const trackingId = document.getElementById('trackingInput').value.trim();
+            const resultDiv = document.getElementById('trackingResult');
+            
+            if (!trackingId) {
+                resultDiv.innerHTML = '<div class="alert alert-warning">कृपया ट्रॅकिंग आयडी एंटर करा</div>';
+                return;
+            }
+            
+            // डेमो ट्रॅकिंग स्टेटस
+            const statuses = [
+                { status: 'pending', text: 'ऑर्डर प्राप्त', time: 'आज 10:30 AM', desc: 'तुमचे ऑर्डर प्राप्त झाले आहे' },
+                { status: 'picked', text: 'पिकअप केले', time: 'आज 2:15 PM', desc: 'सामान पिकअप केले गेले आहे' },
+                { status: 'transit', text: 'ट्रांझिटमध्ये', time: 'आज 4:45 PM', desc: 'सामान डिलिवरी सेंटरकडे प्रवास करत आहे' },
+                { status: 'delivered', text: 'डिलिवरी केले', time: 'उद्या 11:00 AM', desc: 'सामान यशस्वीरित्या डिलिवरी केले गेले' }
+            ];
+            
+            let randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            
+            resultDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-box"></i> ट्रॅकिंग आयडी: ${trackingId}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="tracking-status status-${randomStatus.status}">
+                            <h5>${randomStatus.text}</h5>
+                            <p class="mb-1"><i class="far fa-clock"></i> ${randomStatus.time}</p>
+                            <p class="mb-0">${randomStatus.desc}</p>
+                        </div>
+                        <div class="mt-3">
+                            <p><strong>ग्राहक:</strong> राजेश शर्मा</p>
+                            <p><strong>पत्ता:</strong> शिवाजी नगर, पुणे</p>
+                            <p><strong>अंदाजे डिलिवरी:</strong> उद्या 12:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // बुकिंग फंक्शन
+        function bookCourier() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            
+            if (!name || !phone) {
+                alert('कृपया सर्व आवश्यक माहिती भरा');
+                return;
+            }
+            
+            const trackingId = 'TRK' + Math.floor(100000 + Math.random() * 900000);
+            
+            document.getElementById('bookingForm').innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+                    <h3 class="text-success">बुकिंग यशस्वी!</h3>
+                    <p class="lead">तुमचे ऑर्डर बुक केले गेले आहे.</p>
+                    <div class="alert alert-info">
+                        <h5>तुमचा ट्रॅकिंग आयडी: <strong>${trackingId}</strong></h5>
+                        <p>कृपया हा आयडी सेव्ह करा. तुम्ही या आयडीने तुमचे पॅकेज ट्रॅक करू शकता.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="location.reload()">नवीन ऑर्डर करा</button>
+                </div>
+            `;
+        }
+        
+        // संदेश पाठवणे
+        function sendMessage() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            
+            if (!name || !email) {
+                alert('कृपया नाव आणि ईमेल भरा');
+                return;
+            }
+            
+            document.getElementById('contactForm').innerHTML = `
+                <div class="text-center py-4">
+                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                    <h4 class="text-success">धन्यवाद!</h4>
+                    <p>तुमचा संदेश यशस्वीरित्या पाठवला गेला आहे.</p>
+                    <p>आम्ही तुमच्याशी 24 तासांत संपर्क साधू.</p>
+                </div>
+            `;
+        }
+        
+        // बुकिंग मोडल
+        function openBookingModal() {
+            document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('customerName').focus();
+        }
+    </script>
+</body>
+</html>
